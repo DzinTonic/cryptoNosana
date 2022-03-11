@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strategy name="Aw" description="'str'" inv="inv">
+	<configuration name="config" fileName="'settings.xml'" />
+	<exchange name="exc" taxRate="0.005" />
+	<trader name="tr" exchange="exc" />
+	<investor name="inv" budget="100" trader="tr" enterSource="{data.o}" exitSource="{data.c}" enterCondition="{iEP}" exitCondition="{iExP}" />
+	<input>
+		<data name="data" configuration="config" assetName="'APPL'" dateTime="{'2000-01-01', '2020-01-01'}">
+			<dateTimes /><o /><h /><l /><c />
+		</data>
+	</input>
+	<expression>
+		<volatility name="enterVolatility" source="data.c" data="data" ratio="5" />
+		<compare name="iEP" value="enterVolatility" highValue="data.h" type="'hv>=v'" />
+
+		<bool name="iExP" value="true" data="data" />
+	</expression>
+	<output>
+		<console name="console" />
+		<file name="file" configuration="config" />
+		<screen name="screen" />
+		<tables>
+			<summary name="summary" data="data" inv="inv" output="{{console}}">
+				<extraColumns>
+					<column name="'Date-Time Interval'" nameFormat="'%21s'" value="data.dateTime" valueFormat="'%s'" />
+					<column name="'Exit N'" nameFormat="'%6s'" value="data.o" valueFormat="'%6s'" />
+				</extraColumns>
+			</summary>
+		</tables>
+		<charts>
+			<cs name="cs" data="data" trader="tr" indicators="{{}}" output="{{screen}}" />
+		</charts>
+	</output>
+</strategy>
