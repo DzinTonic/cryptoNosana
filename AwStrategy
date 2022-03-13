@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <strategy name="Aw" description="'str'" inv="inv">
 	<configuration name="config" fileName="'settings.xml'" />
-	<exchange name="exc" taxRate="0.005" />
+	<exchange name="exc" taxRate="0.0025" />
 	<trader name="tr" exchange="exc" />
 	<investor name="inv" budget="100" trader="tr" enterSource="{data.o}" exitSource="{data.c}" enterCondition="{iEP}" exitCondition="{iExP}" />
 	<input>
